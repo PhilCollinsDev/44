@@ -2,8 +2,8 @@ import telebot
 from telebot import types
 from pymongo import MongoClient
 
-# MONGO_URI = 'mongodb+srv://developerofggm:ParseDataJSON@offer.fl76uwi.mongodb.net/?retryWrites=true&w=majority&appName=Offer'
-MONGO_URI = 'mongodb+srv://developerofggm:ParseDataJSON@offer.fl76uwi.mongodb.net/?retryWrites=true&w=majority&appName=Offer&tlsAllowInvalidCertificates=true'
+MONGO_URI = 'mongodb+srv://developerofggm:ParseDataJSON@offer.fl76uwi.mongodb.net/?retryWrites=true&w=majority&appName=Offer'
+#MONGO_URI = 'mongodb+srv://developerofggm:ParseDataJSON@offer.fl76uwi.mongodb.net/?retryWrites=true&w=majority&appName=Offer&tlsAllowInvalidCertificates=true'
 client = MongoClient(MONGO_URI)
 db = client.get_database('test')  
 users_collection = db['users']
