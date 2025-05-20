@@ -3,7 +3,6 @@ from telebot import types
 from pymongo import MongoClient
 
 MONGO_URI = 'mongodb+srv://developerofggm:ParseDataJSON@offer.fl76uwi.mongodb.net/?retryWrites=true&w=majority&appName=Offer'
-#MONGO_URI = 'mongodb+srv://developerofggm:ParseDataJSON@offer.fl76uwi.mongodb.net/?retryWrites=true&w=majority&appName=Offer&tlsAllowInvalidCertificates=true'
 client = MongoClient(MONGO_URI)
 db = client.get_database('test')  
 users_collection = db['users']
@@ -71,7 +70,8 @@ def last20_users(message):
         
 @bot.message_handler(commands=['9911'])
 def send_message_to_users(message):
-    user_ids = users_collection.find({"user_id": {"$type": "string"}}).distinct("user_id")
+    # Получаем все user_id независимо от их типа
+    user_ids = users_collection.distinct("user_id", {"user_id": {"$exists": True}})
     count = 0
 
     markup = types.InlineKeyboardMarkup()
@@ -95,7 +95,8 @@ Less than an hour left until it starts. The game will last 24 hours—hurry to g
         
 @bot.message_handler(commands=['358'])
 def amount(message):
-    users_count = users_collection.count_documents({"user_id": {"$type": "string"}})
+    # Считаем всех пользователей, у которых есть user_id
+    users_count = users_collection.count_documents({"user_id": {"$exists": True}})
     bot.send_message(message.chat.id, f"Total users: {users_count}")
 
 @bot.message_handler(content_types=['text', 'photo', 'video', 'voice', 'document', 'audio', 'location', 'poll', 'dice', 'animation', 'sticker', 'contact'])
